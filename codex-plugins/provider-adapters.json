@@ -1,0 +1,5 @@
+{
+  "name": "provider-adapters",
+  "description": "Gmail, Office 365, and IMAP/SMTP adapter contract registry.",
+  "entry": "src/services/providerAdapters.js"
+}

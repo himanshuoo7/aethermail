@@ -1,0 +1,5 @@
+{
+  "name": "ai-mail-copilot",
+  "description": "Provider-neutral AI summaries, priority scoring, reply drafting, and compose improvement.",
+  "entry": "src/services/mailEngine.js"
+}
