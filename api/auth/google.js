@@ -15,7 +15,7 @@ export default function handler(req, res) {
   const redirectUri = `${getBase(req)}/api/auth/google/callback`;
 
   const params = new URLSearchParams({
-    client_id: process.env.GOOGLE_CLIENT_ID,
+    client_id: process.env.GOOGLE_CLIENT_ID.trim(),
     redirect_uri: redirectUri,
     response_type: "code",
     scope: "openid email profile https://mail.google.com/",
@@ -24,13 +24,6 @@ export default function handler(req, res) {
     state,
   });
 
-  // ACTIVE DEBUG: View this in your browser at /api/auth/google
-  res.setHeader("Content-Type", "text/plain");
-  return res.send(`DEBUG OAUTH CONFIGURATION:
----------------------------
-Client ID: [${process.env.GOOGLE_CLIENT_ID}]
-Redirect URI: [${redirectUri}]
-APP_URL Env: [${process.env.APP_URL || "not set"}]
----------------------------
-Note: Redirect is disabled. If you see this, the code is live.`);
+  res.setHeader("Set-Cookie", `g_state=${state}; HttpOnly; Path=/api/auth/google; SameSite=Lax; Max-Age=600`);
+  res.redirect(`https://accounts.google.com/o/oauth2/v2/auth?${params}`);
 }
