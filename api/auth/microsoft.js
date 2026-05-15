@@ -5,9 +5,11 @@ export default function handler(req, res) {
     return res.status(500).send("MICROSOFT_CLIENT_ID is not configured in environment variables.");
   }
   const state = randomBytes(16).toString("hex");
-  const host = req.headers.host;
-  const proto = host.startsWith("localhost") ? "http" : "https";
-  const redirectUri = `${proto}://${host}/api/auth/microsoft/callback`;
+  const base = process.env.APP_URL || (() => {
+    const host = req.headers.host;
+    return (host.startsWith("localhost") ? "http" : "https") + "://" + host;
+  })();
+  const redirectUri = `${base}/api/auth/microsoft/callback`;
 
   const params = new URLSearchParams({
     client_id: process.env.MICROSOFT_CLIENT_ID,

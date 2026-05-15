@@ -32,9 +32,11 @@ export default async function handler(req, res) {
   }
 
   try {
-    const host = req.headers.host;
-    const proto = host.startsWith("localhost") ? "http" : "https";
-    const redirectUri = `${proto}://${host}/api/auth/microsoft/callback`;
+    const base = process.env.APP_URL || (() => {
+      const host = req.headers.host;
+      return (host.startsWith("localhost") ? "http" : "https") + "://" + host;
+    })();
+    const redirectUri = `${base}/api/auth/microsoft/callback`;
 
     const tokenRes = await fetch("https://login.microsoftonline.com/common/oauth2/v2.0/token", {
       method: "POST",
