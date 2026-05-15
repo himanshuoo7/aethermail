@@ -198,7 +198,7 @@ export default function App() {
 
   const openOAuthWindow = (providerKey) => {
     setAddFlow({ step: "connecting", provider: PROVIDERS.find((p) => p.id === providerKey) });
-    const route = providerKey === "office365" ? "microsoft" : providerKey;
+    const route = { gmail: "google", office365: "microsoft" }[providerKey] ?? providerKey;
     const popup = window.open(`/api/auth/${route}`, "oauth", "popup,width=520,height=660,left=200,top=100");
     if (!popup) setAddFlow((f) => ({ ...f, step: "error", message: "Popup was blocked — allow popups for this site and try again." }));
   };
