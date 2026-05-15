@@ -31,8 +31,6 @@ export default function handler(req, res) {
 Client ID: [${process.env.GOOGLE_CLIENT_ID}]
 Redirect URI: [${redirectUri}]
 APP_URL Env: [${process.env.APP_URL || "not set"}]
----------------------------`);
-
-  // res.setHeader("Set-Cookie", `g_state=${state}; HttpOnly; Path=/api/auth/google; SameSite=Lax; Max-Age=600`);
-  res.redirect(`https://accounts.google.com/o/oauth2/v2/auth?${params}`);
+---------------------------
+Note: Redirect is disabled. If you see this, the code is live.`);
 }
